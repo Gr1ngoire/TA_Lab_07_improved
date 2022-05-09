@@ -181,17 +181,17 @@ class BTree:
             for i in node.child:
                 self.print_tree(i, level)
 
-    def search_key(self, data, node=None):
+    def contains(self, data, node=None):
         if node is not None:
             i = 0
             while i < len(node.keys) and data > node.keys[i]:
                 i += 1
             if i < len(node.keys) and data == node.keys[i]:
-                return (node, i)
+                return True
             elif node.leaf:
-                return None
+                return False
             else:
-                return self.search_key(data, node.child[i])
+                return self.contains(data, node.child[i])
 
         else:
-            return self.search_key(data, self.root)
+            return self.contains(data, self.root)
